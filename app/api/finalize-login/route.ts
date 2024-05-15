@@ -15,5 +15,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
     );
   }
 
-  throw "Not Yet Implmented - Challenge Failed";
+  return NextResponse.redirect(`${req.nextUrl.origin}/user-device/login`);
 }

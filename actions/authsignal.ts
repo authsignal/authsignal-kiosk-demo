@@ -23,7 +23,7 @@ export const claimAnonymousChallenge = async ({
       userId: crypto.createHash("md5").update(email).digest("hex"),
       email,
       action: "enrollPasskey", // This must be the same action as the anonymous challenge initiated by the kiosk
-      redirectUrl: process.env.re,
+      redirectUrl: `${process.env.NEXT_PUBLIC_URL}/api/finalize-login`,
       challengeId,
     });
 
