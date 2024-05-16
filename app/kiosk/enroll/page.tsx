@@ -114,12 +114,6 @@ export default function Order() {
           Start again
         </Button>
       )}
-      <a
-        href={`${process.env.NEXT_PUBLIC_URL}/user-device/login?challengeId=${challengeId}`}
-        target="_blank"
-      >
-        login link
-      </a>
     </main>
   );
 
