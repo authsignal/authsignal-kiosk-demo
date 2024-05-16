@@ -89,7 +89,7 @@ export default function Order() {
               }`}
             >
               <QRCode
-                value={`${process.env.NEXT_PUBLIC_URL}/user-device/login?challengeId=${challengeId}`}
+                value={`${process.env.NEXT_PUBLIC_URL}/user-device/identify?challengeId=${challengeId}`}
                 className="h-full w-full"
               />
             </div>

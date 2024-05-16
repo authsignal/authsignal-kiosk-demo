@@ -46,13 +46,13 @@ export default function AnonymousChallenge() {
       }
 
       // Calls webhook configured on `pickup` action
-      const { isVerified } = await authsignal.kiosk.verify({
+      const { isVerified, error } = await authsignal.kiosk.verify({
         challengeId,
       });
 
       if (!isVerified) {
         toast({
-          title: `User is not allowed coffee.`,
+          title: error,
           variant: "destructive",
         });
         return;

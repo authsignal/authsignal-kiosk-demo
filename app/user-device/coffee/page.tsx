@@ -50,7 +50,7 @@ export default function Order() {
   };
 
   return (
-    <main className="flex max-h-[calc(100vh-64px)] flex-col items-center justify-center p-24 space-y-6">
+    <main className="flex h-[calc(100vh-64px)] flex-col items-center justify-center p-24 space-y-6">
       <div className="mx-auto max-w-md space-y-6 py-12">
         <div className="space-y-2 text-center">
           <h1 className="text-xl md:text-3xl font-bold text-center">

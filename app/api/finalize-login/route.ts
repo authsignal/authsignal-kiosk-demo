@@ -11,9 +11,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
   if (result.isValid) {
     return NextResponse.redirect(
-      `${req.nextUrl.origin}/user-device/login/success`
+      `${req.nextUrl.origin}/user-device/identify/success`
     );
   }
 
-  return NextResponse.redirect(`${req.nextUrl.origin}/user-device/login`);
+  return NextResponse.redirect(`${req.nextUrl.origin}/user-device/identify`);
 }
