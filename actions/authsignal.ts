@@ -85,7 +85,7 @@ export const savePreference = async ({
     }
   );
 
-  if (result.state === "CHALLENGE_REQUIRED") {
+  if (result.state === "CHALLENGE_REQUIRED" || !result.isEnrolled) {
     // Take the user to Authsignal pre-built challenge UI
     redirect(result.url);
   } else if (result.state === "ALLOW") {
