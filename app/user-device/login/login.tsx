@@ -45,7 +45,7 @@ export default function Login() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 space-y-6">
+    <main className="flex max-h-[calc(100vh-64px)] flex-col items-center justify-center p-24 space-y-6">
       <h1 className="text-xl md:text-3xl font-bold text-center">
         Enter your email to proceed
       </h1>
