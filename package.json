@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@authsignal/browser": "^0.5.1-alpha",
+    "@authsignal/browser": "^0.5.2-alpha",
     "@authsignal/node": "^1.0.3",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-label": "^2.0.2",
