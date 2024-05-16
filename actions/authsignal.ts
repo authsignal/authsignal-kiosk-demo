@@ -85,7 +85,16 @@ export const savePreference = async ({
     }
   );
 
-  redirect(result.url);
+  if (result.state === "CHALLENGE_REQUIRED") {
+    // Take the user to Authsignal pre-built challenge UI
+    redirect(result.url);
+  } else if (result.state === "ALLOW") {
+    // Allow the user to sign in
+    throw Error("Not implemented");
+  } else if (result.state === "BLOCK") {
+    // Block the user from signing in
+    throw Error("Not implemented");
+  }
 };
 
 export const getUser = async ({ userId }: { userId: string }) => {
