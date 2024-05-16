@@ -88,7 +88,7 @@ export const savePreference = async ({
   redirect(result.url);
 };
 
-export const getCoffeePreference = async ({ userId }: { userId: string }) => {
+export const getUser = async ({ userId }: { userId: string }) => {
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/users/${userId}`,
     {
@@ -99,7 +99,10 @@ export const getCoffeePreference = async ({ userId }: { userId: string }) => {
     }
   );
 
-  return response.data.custom.coffeePreference as CoffeePreference;
+  return {
+    email: response.data.email as string,
+    coffeePreference: response.data.custom.coffeePreference as CoffeePreference,
+  };
 };
 
 export const isChallengeSuccessful = async (token: string) => {

@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useInterval } from "usehooks-ts";
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
-import { CoffeePreference, getCoffeePreference } from "@/actions/authsignal";
+import { CoffeePreference, getUser } from "@/actions/authsignal";
 
 const REDIRECT_IN_SECS = 60 * 1000;
 const PROGRESS_TICKER_INTERVAL = 100;
@@ -18,19 +18,22 @@ export default function Success() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
-  const [coffeePreference, setCoffeePreference] = useState<CoffeePreference>();
+  const [user, setUser] = useState<{
+    email: string;
+    coffeePreference: CoffeePreference;
+  }>();
 
   useEffect(() => {
     if (!userId) {
       return;
     }
 
-    const fetchCoffeePreference = async () => {
-      const result = await getCoffeePreference({ userId });
-      setCoffeePreference(result);
+    const fetchUser = async () => {
+      const user = await getUser({ userId });
+      setUser(user);
     };
 
-    fetchCoffeePreference();
+    fetchUser();
   }, [userId]);
 
   useInterval(() => {
@@ -47,11 +50,17 @@ export default function Success() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 space-y-6">
       <CircleCheck size={42} color="#007c00" />
-      <h1 className="text-3xl font-bold">Order pick up confirmed</h1>
-      {coffeePreference ? (
-        <p className="text-lg">
-          Your order is a {coffeePreference.size} {coffeePreference.coffee}
-        </p>
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">Order pick up confirmed</h1>
+        {user ? <p className="text-center text-sm">{user.email}</p> : ""}
+      </div>
+      {user ? (
+        <div>
+          <p className="text-lg">
+            Your order is a {user.coffeePreference.size}{" "}
+            {user.coffeePreference.coffee}
+          </p>
+        </div>
       ) : (
         <p className="text-lg">Fetching order...</p>
       )}
