@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Authsignal Kiosk Demo
 
-## Getting Started
+This is a demo on using Authsignal to allow users to identify themselves on a kiosk.
 
-First, run the development server:
+It uses a coffee ordering/pickup scenario.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Users can select their coffee preference ahead of time on their own devices, then use an Enrollment Kiosk to enroll a passkey which can then be used at a Challenge Kiosk to pickup their coffee.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Demo Pages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Selecting Coffee Preferences](https://authsignal-kiosk-demo.vercel.app/user-device/coffee)
+- [Passkey Enrollment Kiosk](https://authsignal-kiosk-demo.vercel.app/kiosk/enroll)
+- [Coffee Pickup Challenge Kiosk](https://authsignal-kiosk-demo.vercel.app/kiosk/pickup)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Run this project yourself
 
-## Learn More
+1. Clone the repository
+2. Create a copy of `.env.example` as `.env` via the command `cp .env.example .env`
+3. Fill in the environment variables with your own details
+4. Create the required actions this project uses `saveCoffeePreference`, `enrollPasskey` and `pickup` on your Authsignal Tenant. Specific details can be requested by contacting us.
+5. Run `yarn` to install dependencies
+6. Run `yarn run dev` to run locally. (See note below)
 
-To learn more about Next.js, take a look at the following resources:
+> Note: When running locally, scanning the initial QR code in the Passkey Enrollment Kiosk while redirect you to an invalid public url. There will a URL logged to the console which you can use on the machine running the application locally.
+>
+> Alternatively, you may want to create a free application on [Vercel](https://vercel.com/) to host the project instead.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Experimental
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This demo uses APIs that have not been finalized and is subject to change.

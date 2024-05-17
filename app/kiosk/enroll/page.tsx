@@ -145,6 +145,9 @@ export default function Order() {
     const result = await response.json();
 
     setChallengeId(result.challengeId);
+    console.log(
+      `${process.env.NEXT_PUBLIC_URL}/user-device/identify?challengeId=${result.challengeId}`
+    );
     setIsChallengeClaimed(false);
     setIsLoadingChallenge(false);
   }
