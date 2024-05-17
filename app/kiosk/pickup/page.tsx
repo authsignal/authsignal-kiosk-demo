@@ -21,7 +21,23 @@ export default function AnonymousChallenge() {
       baseUrl: process.env.NEXT_PUBLIC_AUTHSIGNAL_URL!,
     });
 
-    const challengeId = await authsignal.kiosk.challenge({ action: "pickup" });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/challenge`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${window.btoa(
+            encodeURIComponent(process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!)
+          )}`,
+        },
+        body: JSON.stringify({
+          action: "pickup",
+        }),
+      }
+    );
+
+    const challengeId = (await response.json()).challengeId;
 
     try {
       const result = await authsignal.passkey.signIn({
@@ -45,10 +61,23 @@ export default function AnonymousChallenge() {
         return;
       }
 
-      // Calls webhook configured on `pickup` action
-      const { isVerified, error } = await authsignal.kiosk.verify({
-        challengeId,
-      });
+      // Calls webhook configured on `pickup` action as part of this verify call
+      // The webhook is where custom logic can be added such as collecting payment, looking up orders, or firing off other events.
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/verify`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${window.btoa(
+              encodeURIComponent(process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!)
+            )}`,
+          },
+          body: JSON.stringify({ challengeId }),
+        }
+      );
+
+      const { isVerified, error } = await response.json();
 
       if (!isVerified) {
         toast({

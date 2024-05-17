@@ -1,6 +1,5 @@
 "use client";
 
-import { Authsignal } from "@authsignal/browser";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
@@ -26,14 +25,21 @@ export default function Order() {
 
   useInterval(
     async () => {
-      const authsignal = new Authsignal({
-        tenantId: process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!,
-        baseUrl: process.env.NEXT_PUBLIC_AUTHSIGNAL_URL,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/verify`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${window.btoa(
+              encodeURIComponent(process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!)
+            )}`,
+          },
+          body: JSON.stringify({ challengeId }),
+        }
+      );
 
-      const result = await authsignal.kiosk.verify({
-        challengeId,
-      });
+      const result = await response.json();
 
       if (!result.isClaimed || isLoadingChallenge) {
         return;
@@ -119,16 +125,26 @@ export default function Order() {
 
   async function startNewChallenge() {
     setIsLoadingChallenge(true);
-    const authsignal = new Authsignal({
-      tenantId: process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!,
-      baseUrl: process.env.NEXT_PUBLIC_AUTHSIGNAL_URL,
-    });
 
-    const challengeId = await authsignal.kiosk.challenge({
-      action: "enrollPasskey",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/challenge`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${window.btoa(
+            encodeURIComponent(process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!)
+          )}`,
+        },
+        body: JSON.stringify({
+          action: "enrollPasskey",
+        }),
+      }
+    );
 
-    setChallengeId(challengeId);
+    const result = await response.json();
+
+    setChallengeId(result.challengeId);
     setIsChallengeClaimed(false);
     setIsLoadingChallenge(false);
   }

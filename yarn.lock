@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@authsignal/browser@^0.5.2-alpha":
-  version "0.5.2-alpha"
-  resolved "https://registry.yarnpkg.com/@authsignal/browser/-/browser-0.5.2-alpha.tgz#b23bafe8cb9f3371c7432447d14f813069220c70"
-  integrity sha512-8iMbhNqhqZpMB6qPZKOafwHr06U4e9vc19pHff+Uk9Iwlfd6L/Fx1YpTmbHtMLaD7hveNZZbckeWO28GhLR1VQ==
+"@authsignal/browser@^0.5.3-alpha":
+  version "0.5.3-alpha"
+  resolved "https://registry.yarnpkg.com/@authsignal/browser/-/browser-0.5.3-alpha.tgz#234f39ed82c05cf45e6998a5b300d20c18efe92a"
+  integrity sha512-ImvVDpI19b171OPTkRFRR2hfLjdLruJLH9PC5okfcfnbT/hFNWq/vxUIlIivQrtLLkaKHJaBPb7P7MC+pZ6yXg==
   dependencies:
     "@fingerprintjs/fingerprintjs" "^3.3.6"
     "@simplewebauthn/browser" "^9.0.1"
