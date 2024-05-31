@@ -6,6 +6,7 @@ import { useInterval } from "usehooks-ts";
 import QRCode from "react-qr-code";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button, ButtonLoading } from "@/components/ui/button";
+import { initializeChallenge, verifyChallenge } from "@/actions/terminal";
 
 const CHALLENGE_TTL = 10 * 60 * 1000;
 
@@ -25,21 +26,7 @@ export default function Order() {
 
   useInterval(
     async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/verify`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Basic ${window.btoa(
-              encodeURIComponent(process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!)
-            )}`,
-          },
-          body: JSON.stringify({ challengeId }),
-        }
-      );
-
-      const result = await response.json();
+      const result = await verifyChallenge(challengeId);
 
       if (!result.isClaimed || isLoadingChallenge) {
         return;
@@ -126,23 +113,7 @@ export default function Order() {
   async function startNewChallenge() {
     setIsLoadingChallenge(true);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/challenge`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${window.btoa(
-            encodeURIComponent(process.env.NEXT_PUBLIC_AUTHSIGNAL_TENANT_ID!)
-          )}`,
-        },
-        body: JSON.stringify({
-          action: "enrollPasskey",
-        }),
-      }
-    );
-
-    const result = await response.json();
+    const result = await initializeChallenge();
 
     setChallengeId(result.challengeId);
     console.log(
