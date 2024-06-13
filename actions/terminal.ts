@@ -4,7 +4,7 @@ export const initializeChallenge = async (): Promise<{
   challengeId: string;
 }> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/terminal/challenge`,
+    `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/terminal/challenge`,
     {
       method: "POST",
       headers: {
@@ -26,7 +26,7 @@ export const verifyChallenge = async (
   accessToken?: string;
 }> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/client/terminal/verify`,
+    `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/terminal/verify`,
     {
       method: "POST",
       headers: {
