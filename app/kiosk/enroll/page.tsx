@@ -13,6 +13,8 @@ const CHALLENGE_TTL = 10 * 60 * 1000;
 export default function Order() {
   const [isLoadingChallenge, setIsLoadingChallenge] = useState(false);
   const [challengeId, setChallengeId] = useState<string>("");
+  const [code, setCode] = useState<string>("");
+
   const [isChallengeClaimed, setIsChallengeClaimed] = useState(false);
   const router = useRouter();
 
@@ -26,7 +28,7 @@ export default function Order() {
 
   useInterval(
     async () => {
-      const result = await verifyChallenge(challengeId);
+      const result = await verifyChallenge(challengeId, code);
 
       if (!result.isClaimed || isLoadingChallenge) {
         return;
@@ -46,7 +48,7 @@ export default function Order() {
         router.push("/kiosk/enroll/fail");
       }
     },
-    challengeId ? 1000 : null
+    challengeId && code ? 1000 : null
   );
 
   return (
@@ -56,7 +58,7 @@ export default function Order() {
         To begin, scan the QR code to identify yourself.
       </p>
       <div className="min-w-80">
-        {challengeId ? (
+        {challengeId && code ? (
           <div className="flex items-center justify-center min-w-full min-h-full">
             {isChallengeClaimed && (
               <svg
@@ -116,6 +118,7 @@ export default function Order() {
     const result = await initializeChallenge();
 
     setChallengeId(result.challengeId);
+    setCode(result.code);
     console.log(
       `${process.env.NEXT_PUBLIC_URL}/user-device/identify?challengeId=${result.challengeId}`
     );

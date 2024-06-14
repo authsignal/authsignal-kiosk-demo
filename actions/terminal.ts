@@ -2,6 +2,7 @@
 
 export const initializeChallenge = async (): Promise<{
   challengeId: string;
+  code: string;
 }> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/terminal/challenge`,
@@ -18,12 +19,14 @@ export const initializeChallenge = async (): Promise<{
 };
 
 export const verifyChallenge = async (
-  challengeId: string
+  challengeId: string,
+  code: string
 ): Promise<{
   isClaimed: boolean;
   isConsumed: boolean;
   isVerified: boolean;
   accessToken?: string;
+  error?: string;
 }> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AUTHSIGNAL_URL}/terminal/verify`,
@@ -33,7 +36,7 @@ export const verifyChallenge = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.TERMINAL_SECRET}`,
       },
-      body: JSON.stringify({ challengeId }),
+      body: JSON.stringify({ challengeId, code }),
     }
   );
 
